@@ -1,9 +1,10 @@
+import { Map } from 'leaflet';
 import React, { FormEvent, useRef } from 'react'
 import { dataType } from '../type';
 
 const API_URL = 'http://ip-api.com/json'
 
-export const Search = ({setData}: {setData: (data: dataType) => void}) => {
+export const Search = ({setData, map}: {setData: (data: dataType) => void, map: Map | null}) => {
     const input_ref = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: FormEvent) => {
@@ -12,7 +13,17 @@ export const Search = ({setData}: {setData: (data: dataType) => void}) => {
             try {
                 const response = await fetch(`${API_URL}/${input_ref.current.value}`);
                 const json = await response.json();
+                const newData: dataType = {
+                    query: json.query,
+                    city: json.city,
+                    zip: json.zip,
+                    position: [json.lat, json.lon],
+                    timezone: json.timezone,
+                    isp: json.isp
+                }
                 console.log(json);
+                setData(newData);
+                map?.setView([json.lat, json.lon], 13);
             } catch (error) {
                 console.log(error);
             }

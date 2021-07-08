@@ -1,8 +1,10 @@
+import { LatLngExpression } from "leaflet";
+
 export type dataType = {
+    query: string,
     city: string,
     zip: string,
-    lat: number,
-    long: number,
+    position: LatLngExpression,
     timezone: string,
     isp: string
 }
