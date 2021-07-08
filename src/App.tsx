@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="flex flex-col h-screen" >
       <Search setData={setData} map={map} />
-      <MainSection data={data} map={map} setMap={setMap} /> 
+      <MainSection data={data} setMap={setMap} /> 
     </div>
   )
 }

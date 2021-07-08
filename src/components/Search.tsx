@@ -13,6 +13,9 @@ export const Search = ({setData, map}: {setData: (data: dataType) => void, map: 
             try {
                 const response = await fetch(`${API_URL}/${input_ref.current.value}`);
                 const json = await response.json();
+                if (json.status === 'fail') {
+                    throw Error(json.message);
+                }
                 const newData: dataType = {
                     query: json.query,
                     city: json.city,
@@ -21,11 +24,10 @@ export const Search = ({setData, map}: {setData: (data: dataType) => void, map: 
                     timezone: json.timezone,
                     isp: json.isp
                 }
-                console.log(json);
                 setData(newData);
                 map?.setView([json.lat, json.lon], 13);
             } catch (error) {
-                console.log(error);
+                alert(error.toString());
             }
         }
     }

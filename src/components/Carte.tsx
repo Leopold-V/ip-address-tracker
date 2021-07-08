@@ -1,4 +1,4 @@
-import { Icon, LatLngExpression, Map, map } from "leaflet";
+import { Icon, Map } from "leaflet";
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { dataType } from "../type";
@@ -9,20 +9,20 @@ const icon: Icon = L.icon({
   iconUrl: iconMarker,
 });
 
-export const Carte = ({ data, map, setMap }: { data: dataType, map: Map, setMap: (map: Map) => void }) => {
+export const Carte = ({ data, setMap }: { data: dataType, setMap: (map: Map) => void }) => {
   const [position, setPosition] = useState(data.position);
 
   useEffect(() => {
     setPosition(data.position);
   }, [data.position]);
-  
+
   return (
     <MapContainer
       style={{ width: "100%", height: "100%", zIndex: 0 }}
       whenCreated={setMap}
       center={position}
       zoom={13}
-      scrollWheelZoom={true}
+      scrollWheelZoom={false}
       placeholder
     >
       <TileLayer
